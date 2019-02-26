@@ -1,0 +1,31 @@
+input_file = open('input.txt', 'r')
+for number, line in enumerate(input_file.readlines()):
+    if number == 0:
+        lenght = int(line)
+        continue
+    elements = [float(num) for num in line.split(' ')]
+
+
+temp_el = elements[:]
+for i in range(int(lenght)-1):
+	for j in range(int(lenght)-1):
+		if temp_el[j] < temp_el[j+1]:
+			tmp = temp_el[j]
+			temp_el[j] = temp_el[j+1]
+			temp_el[j+1] = tmp
+for i in range(int(lenght)):
+	for j in range(int(lenght)):
+		if elements[j] == temp_el[int((lenght)/2 - 0.5)]:
+			med_pos = j
+			continue
+max = elements.index(max(elements))+1
+med = med_pos+1
+min = elements.index(min(elements))+1
+output_file = open("output.txt", "w")
+output_file.write(str(min) + ' ' + str(med) + ' ' + str(max))
+
+
+ 
+
+
+
