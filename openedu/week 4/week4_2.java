@@ -2,6 +2,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 public class Main {
 
     public static void main(String[] args) throws IOException {
@@ -13,23 +16,19 @@ public class Main {
         }
         StringBuilder deleted = new StringBuilder();
         String value;
-        int counter = 0;
         int actionsValue = Integer.parseInt(data.toString().split("\\n")[0].split(" ")[0].trim());
-        ArrayList<Integer>  stack = new ArrayList<Integer>();
+        Queue<String> queue = new PriorityQueue<String>();
         for(int i = 1; i < actionsValue+1; i++){
             if(data.toString().split("\\n")[i].split(" ")[0].trim().equals("-")){
-                counter--;
-                deleted.append(stack.get(counter)).append("\n");
-                stack.remove(counter);
+                deleted.append(queue.remove()).append("\n");
             }
             else  {
                 value = data.toString().split("\\n")[i].split(" ")[1].trim();
-                stack.add(counter, Integer.valueOf(value));
-                counter++;
+                queue.add(value);
             }
         }
         FileWriter writer = new FileWriter("output.txt", false);
-        writer.write(deleted.toString());
+        writer.write(deleted.toString().trim());
         writer.flush();
     }
 }

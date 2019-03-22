@@ -18,11 +18,11 @@ for i in range(int(lenght)):
 		if elements[j] == temp_el[int((lenght)/2 - 0.5)]:
 			med_pos = j
 			continue
-max = elements.index(max(elements))+1
+max =  elements.index(temp_el[lenght-1])+1 #elements.index(max(elements))+1
 med = med_pos+1
-min = elements.index(min(elements))+1
+min =  elements.index(temp_el[0])+1 #elements.index(min(elements))+1
 output_file = open("output.txt", "w")
-output_file.write(str(min) + ' ' + str(med) + ' ' + str(max))
+output_file.write(str(max) + ' ' + str(med) + ' ' + str(min))
 
 
  

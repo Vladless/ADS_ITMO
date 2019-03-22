@@ -4,7 +4,6 @@ for number, line in enumerate(input_file.readlines()):
         lenght = int(line)
         continue
     elements = [int(num) for num in line.split(' ')]
-
 position = []
 for i in range(lenght):
     j = i - 1
