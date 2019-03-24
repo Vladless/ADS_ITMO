@@ -1,34 +1,31 @@
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.LinkedList;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        StringBuilder data = new StringBuilder();
-        FileReader reader = new FileReader("input.txt");
-        int c;
-        while((c=reader.read())!=-1){
-            data.append((char) c);
-        }
+        String content;
+        int fl = 0;
         StringBuilder deleted = new StringBuilder();
-        String value;
-        int actionsValue = Integer.parseInt(data.toString().split("\\n")[0].split(" ")[0].trim());
-        Queue<String> queue = new PriorityQueue<String>();
-        for(int i = 1; i < actionsValue+1; i++){
-            if(data.toString().split("\\n")[i].split(" ")[0].trim().equals("-")){
-                deleted.append(queue.remove()).append("\n");
+        BufferedReader br = new BufferedReader(new FileReader("input.txt"));
+        LinkedList<Integer> queue = new LinkedList<>();
+        while ((content = br.readLine()) != null) {
+            if(content.split(" ")[0].equals("+")){
+                queue.addFirst(Integer.valueOf(content.split(" ")[1].trim()));
             }
-            else  {
-                value = data.toString().split("\\n")[i].split(" ")[1].trim();
-                queue.add(value);
+            else{
+                if(fl == 0) {
+                    fl++;
+                    continue;
+                }
+                deleted.append(queue.removeLast()).append("\n");
             }
         }
-        FileWriter writer = new FileWriter("output.txt", false);
-        writer.write(deleted.toString().trim());
-        writer.flush();
+        Path outputFilePath = Paths.get("output.txt");
+        Files.write(outputFilePath, Collections.singleton(deleted));
     }
 }
