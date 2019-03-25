@@ -23,12 +23,19 @@ public class Main {
         Files.write(outputFilePath, Collections.singleton(info));
     }
     private static boolean isSeqTrue(String content) {
+		//массив служащий для описания структуры скобочной последовательности
         int[] bracketsStruct = new int[content.length()];
         int marck = 0;
+		//если пос-ть сразу начинается с закрывающий скобок, 
+		//то она сразу считается неккоректной
         if (content.charAt(0) == ')' || content.charAt(0) == ']') {
             return false;
         }
+		//определение типа скобок
         for (int i = 0; i < content.length(); i++) {
+			//если исследуемый символ совпададет с одним из типов открывающих скобок, то
+			//заносим 1 в bracketsStruct как символ описывающий тип скобки и
+			// увеличиваем marck для нахождения кол-ва открывающих скобок стоящих друг за другом
             if (content.charAt(i) == '(') {
                 bracketsStruct[marck] = 1;
                 marck++;
@@ -37,6 +44,10 @@ public class Main {
                 bracketsStruct[marck] = 0;
                 marck++;
             }
+			//проверяем на последовательность закрывающих скобок
+			//если marck = 0 или bracketsStruct[marck - 1], 
+			//то открывающих скобок не найдено, иначе уменьшаем marck 
+			//для проверки равновесия структуры последовательности
             if (content.charAt(i) == ')') {
                 if (marck == 0 || bracketsStruct[marck - 1] == 0) {
                     return false;
@@ -50,6 +61,8 @@ public class Main {
                 else marck--;
             }
         }
+		//marck == 0 то, кол-во закрывающих и открывающих скобок роавно => 
+		//последовательность корректна
         return marck == 0;
     }
 }
